@@ -1,0 +1,25 @@
+.transitionGroup {
+  height: 100%;
+}
+
+.fade-appear
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-appear-active
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 3000ms linear 1500ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+  opacity: 0;
+  transform: translateY(-9999px);
+  transition: 3000ms ease-in;
+}

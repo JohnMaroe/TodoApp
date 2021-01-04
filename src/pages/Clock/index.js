@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 
 import Quote from 'inspirational-quotes';
 
 import { Container } from './styles';
+
 import cloudy from '../../assets/icons/cloudy.png';
 import rainny from '../../assets/icons/rainny.png';
 import sunny from '../../assets/icons/sunny.png';
@@ -31,6 +33,7 @@ function Clock() {
 
     async function handleAPI(latitude, longitude) {
       const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIkey}`);
+      console.log(data);
       setWeather(data.weather[0].main);
       setLocationCity(data.name);
       setLocationCountry(data.sys.country);
@@ -96,10 +99,12 @@ function Clock() {
           <span>IN {locationCity.toUpperCase()}, {locationCountry.toUpperCase()}</span>
         </section>
 
-        <footer>
-          <p>MORE</p>
-          <button><i className="fas fa-sort-down"></i></button>
-        </footer>
+        <NavLink to="/app">
+          <footer>
+            <p>MORE</p>
+            <button><i className="fas fa-sort-down"></i></button>
+          </footer>
+        </NavLink>
       </main>
     </Container>
   );

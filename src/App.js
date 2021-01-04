@@ -1,10 +1,10 @@
-import Clock from './pages/Clock';
 import { Globals } from './global/index';
+import Routes from './routes';
 
 function App() {
   return (
     <>
-      <Clock />
+      <Routes />
 
       <Globals />
     </>

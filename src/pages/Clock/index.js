@@ -22,7 +22,7 @@ function Clock() {
 
 
   async function fetchData() {
-    const APIkey = '06516160b02368d5bddc1b19ad0f4035';
+    const APIkey = process.env.REACT_APP_API_KEY;
     navigator.geolocation.getCurrentPosition(handlePosition);
 
     function handlePosition(position) {

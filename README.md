@@ -2,7 +2,7 @@
 # Complete Todo App
 
 I love todo apps, they are so useful, quick to add a task and helps tons with productivity. (and memory)
-But I always felt incomplete using other's todo apps, which is why I will be creating my own version and add my own features.
+But I always felt incomplete using other's todo apps, which is why I'm creating this version and adding features that make me feel more productive and satisfied!
 
 
 ### Technologies being used as of now

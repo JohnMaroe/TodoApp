@@ -1,17 +1,44 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import Class from '../../functions';
 
-import img from '../../assets/mountain.jpg';
+import img1 from '../../assets/bg/mountain.jpg';
+import img2 from '../../assets/bg/tianshu.jpg';
+import img3 from '../../assets/bg/boat.jpg';
+import img4 from '../../assets/bg/scene.jpg';
+
+let bgArray = [img1, img2, img3, img4];
+const randomNum = Class.randomNumFromArray(bgArray);
+
+const iconAnimation = keyframes`
+ 25% { transform: translateY(-4px); }
+ 50%, 100% { transform: translateY(0); }
+ 75% { transform: translateY(4px); }
+`
 
 export const Container = styled.div`
   position: absolute;
+  z-index: 5;
 
   color: #eee;
-  background: url(${img}) center no-repeat;
-  background-size: cover;
+  background: url(${bgArray[randomNum]}) center no-repeat;
+  background-size: 100% 100%;
+  
   height: 100%;
   width: 100%;
   opacity: 1;
   cursor: default;
+
+  main {
+    height: inherit;
+    opacity: 0.9;
+  }
+
+  .background {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.55);
+  }
 
   header {
     position: absolute;
@@ -53,11 +80,13 @@ export const Container = styled.div`
       text-align: right;
       width: 249px;
 
-      font-weight: bolder;
+      font-weight: 700;
       font-size: 12px;
+
       position: absolute;
       right: 0;
       padding: 0 15px 0 0; 
+
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -94,9 +123,9 @@ export const Container = styled.div`
     }
 
     h1 {
-      font-size: 155px;
-      font-weight: 900;
-      text-align: left;
+      font-size: 160px;
+      font-weight: 700;
+      text-align: center;
 
       span {
         font-weight: 50;
@@ -132,6 +161,15 @@ export const Container = styled.div`
 
     cursor: pointer;
 
+    &:hover {
+      i {
+        animation-name: ${iconAnimation};
+        animation-duration: 1s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+      }
+    }
+
     p {
       font-weight: 700;
       font-size: 20px;
@@ -148,6 +186,10 @@ export const Container = styled.div`
       height: 30px;
 
       cursor: pointer;
+
+      i {
+        padding-bottom: 7px;
+      }
     }
   }
 
@@ -162,103 +204,111 @@ export const Container = styled.div`
       margin-left: 90px;
     }
 
-    footer {
+    a {
       margin-bottom: 60px;
       margin-right: 70px;
     }
   }
 
-  @media (max-width: 750px) {
+  @media (max-width: 800px) {
     main {
       display: flex;
       flex-direction: column;
-      align-items: center;
+
+    header {
+      display: flex;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
 
-      header {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+      position: relative;
+      top: 350px;
 
+      height: 150px;
+
+      margin: 0;
+      margin-left: auto;
+      margin-right: auto;
+
+      span {
         position: relative;
-        top: 350px;
+      }
 
-        height: 150px;
+      p {
+        & :last-child {
+          padding: 0 0 9px 2px;
+        }
+      }
+    }
 
-        margin: 0;
-        margin-left: auto;
-        margin-right: auto;
+    .hamburguer {
+      display: none;
+    }
+
+    section {
+      margin: 0;
+
+      top: 0;
+      padding-bottom: 20px;
+
+      width: 100%;
+      height: 280px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      h1 {
+        font-size: 95px;
+        margin-top: 50px;
+        margin-bottom: 25px;
 
         span {
-          position: relative;
+          display: none;
+        }
+      }
+
+      span {
+        font-size: 12px;
+      }
+
+      div {
+        position: absolute;
+        top: 0;
+
+        width: 100%;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        box-shadow: inset 0 100px 999px 0 rgba(0,0,0,0.5);
+
+        span .hamburguer {
+          font-size: 20px;
+          display: inline;
+          padding-top: 5px;
+        }
+
+        img {
+          margin: 10px 0 0 10px;
+          transform: scale(0.75);
         }
 
         p {
-          & :last-child {
-            padding: 0 0 9px 2px;
-          }
-        }
-      }
-
-      section {
-        margin: 0;
-
-        top: 0;
-        padding-bottom: 20px;
-
-        width: 100%;
-        height: 280px;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        h1 {
-          font-size: 95px;
-          margin-top: 50px;
-          margin-bottom: 25px;
-
-          span {
-            display: none;
-          }
-        }
-
-        span {
           font-size: 12px;
+          padding-right: 10px;
+          margin: 10px 0 0 10px;
         }
-
-        div {
-          position: absolute;
-          top: 0;
-
-          width: 100%;
-
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-
-          box-shadow: inset 0 100px 999px 0 rgba(0,0,0,0.5);
-
-          img {
-            margin: 10px 0 0 10px;
-            transform: scale(0.75);
-          }
-
-          p {
-            font-size: 12px;
-            padding-right: 10px;
-            margin: 10px 0 0 10px;
-          }
-        }
-      }
-
-      footer {
-        position: relative;
-        top: 465px;
-
-        margin: 0 auto 0 auto;
       }
     }
+
+    footer {
+      width: 140px;
+      height: 50px;
+    }
+
+      
+  }
   }
 `;

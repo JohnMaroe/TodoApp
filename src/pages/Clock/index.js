@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import Quote from 'inspirational-quotes';
 
 import { Container } from './styles';
+import Hamburguer from '../../components/Hamburguer';
 
 import cloudy from '../../assets/icons/cloudy.png';
 import rainny from '../../assets/icons/rainny.png';
@@ -80,6 +81,7 @@ function Clock() {
 
   return (
     <Container>
+      <div className="background"></div>
       <main>
         <header>
           <p>
@@ -90,10 +92,13 @@ function Clock() {
           <span>-{quoteAuthor}</span>
         </header>
 
+        <Hamburguer clock />
+
         <section>
           <div>
             {weather && <img src={handleWeatherIcon()} alt={weather} />}
             <p>{greeting} &#183; {weather.toUpperCase()}</p>
+            <Hamburguer invisible />
           </div>
           <h1>{time} <span>UTC</span></h1>
           <span>IN {locationCity.toUpperCase()}, {locationCountry.toUpperCase()}</span>

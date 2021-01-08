@@ -10,7 +10,7 @@ export const Globals = createGlobalStyle`
   }
 
   html, body, :root, #root {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Cabin', sans-serif;
     width: 100%;
     height: 100%;
   }

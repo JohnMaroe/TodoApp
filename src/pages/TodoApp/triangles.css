@@ -1,0 +1,44 @@
+.triangle {
+  position: absolute;
+  z-index: 3;
+}
+
+.t1 {
+  width: 0;
+  height: 0;
+  border-top: 61px solid #2f2928;
+  border-right: 61px solid transparent;
+
+  top: -5px;
+  left: -5px;
+}
+
+.t2 {
+  width: 0;
+  height: 0;
+  border-top: 61px solid #2f2928;
+  border-left: 61px solid transparent;
+
+  top: -5px;
+  right: -5px;
+}
+
+.t3 {
+  width: 0;
+  height: 0;
+  border-bottom: 35px solid #2f2928;
+  border-left: 35px solid transparent;
+
+  bottom: -5px;
+  right: -5px;
+}
+
+.t4 {
+  width: 0;
+  height: 0;
+  border-bottom: 35px solid #2f2928;
+  border-right: 35px solid transparent;
+
+  bottom: -5px;
+  left: -5px;
+}

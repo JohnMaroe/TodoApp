@@ -12,6 +12,15 @@ export const Container = styled.div`
 
   color: ${props => props.theme.textColor};
 
+  .fa-angle-left {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+
+    font-size: 28px;
+    color: #d8a05666;
+  }
+
   main {
     position: relative;
 
@@ -52,6 +61,13 @@ export const Container = styled.div`
 
         box-shadow: 10px 0 5px rgba(0,0,0,0.4);
         color: rgba(0,0,0, 0.7);
+
+        i {
+          width: 15px;
+          height: 15px;
+          font-size: 28px;
+          color: #d8a05666;
+        }
       }
 
       .main {
@@ -59,7 +75,7 @@ export const Container = styled.div`
         background-color: ${props => props.theme.mainBg};
         
         border-radius: 0 3.5px 3.5px 0;
-        padding: 15px 23px 5px 32px;
+        padding: 15px 32px 5px 32px;
 
         display: flex;
         flex-direction: column;
@@ -71,6 +87,8 @@ export const Container = styled.div`
           display: flex;
           justify-content: space-between;
           align-items: center;
+
+          margin-bottom: 24px;
         }
 
         h1 {
@@ -90,6 +108,18 @@ export const Container = styled.div`
           border-radius: 5px;
           background-color: rgba(0,0,0,0.5);
           color: ${props => props.theme.textColor};
+        }
+
+        .todos {
+          width: 100%;
+
+          ul {
+            background-color: transparent;
+            border-radius: 9px;
+
+            max-height: 600px;
+            overflow: auto;
+          }
         }
       }
     }

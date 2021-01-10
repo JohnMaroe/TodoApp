@@ -7,7 +7,7 @@ import folderpattern from '../../../assets/papyrus-dark.png';
 const Ad = styled.div`
   height: 100%;
   width: 250px;
-  transition: 350ms all ease;
+  transition: 185ms all ease;
 
   position: absolute;
   right: -260px;

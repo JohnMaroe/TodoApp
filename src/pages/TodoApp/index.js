@@ -1,22 +1,29 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
-
+import { NavLink } from 'react-router-dom';
 
 import { Container } from './styles';
 import './triangles.css';
 
+// Components
 import Modal from '../../components/Modal';
 import Adjustments from '../../components/TodoApp/Adjustments';
+import ListItem from '../../components/TodoApp/ListItem';
 
 import Class from '../../functions';
 
 
 function TodoApp() {
+  // Data states
   const [modalOpen, setModalOpen] = useState(false);
   const [adjustmentsOpen, setAdjustmentsOpen] = useState(false);
   const [date, setDate] = useState();
   const [placeholders,] = useState(['Discord call incoming!', 'Take out the thrash', 'Study \'till midnight', 'Hang out with friends', 'Vet at 12:00PM']);
+  const [inputData, setInputData] = useState('');
+  const [todosData, setTodosData] = useState(['Eat breakfast at 8PM', 'Walk dog to the park', 'Talk to your friend from Dalas']);
+  Class.setLocalStorageFromArray(todosData);
 
+  // Functions and handlers
   function handleDay() {
     const now = new Date().toLocaleString(undefined, {
       month: "short", day: "numeric", weekday: "long"
@@ -25,10 +32,19 @@ function TodoApp() {
   }
   useEffect(handleDay, []);
 
-  function handleForm(e) {
-    e.preventDefault();
-    
-  };
+  // Creating todos
+  function handleNewTodo() {
+    if (inputData === '') return;
+
+    setTodosData([...todosData, inputData]);
+    setInputData('');
+  }
+
+  function createTodos() {
+    return todosData.map((data, index) => {
+      return <ListItem key={index} id={index}>{data}</ListItem>;
+    });
+  }
 
   const main = useRef(null);
   useEffect(() => {adjustmentsOpen ? 
@@ -41,9 +57,12 @@ function TodoApp() {
     textColor: '#eee'
   };
 
+  // Actual component
   return (
     <ThemeProvider theme={theme}>
       <Container>
+        <NavLink to="/"><i class="fas fa-angle-left"></i></NavLink>
+
         <main>
           <div className="bg"></div>
           <div className="triangle t1"></div>
@@ -54,18 +73,24 @@ function TodoApp() {
           <section>
             <div className="area nav">
               <p>asihash</p>
-              <a href="#"><i className="fas fa-frog"></i></a>
+              <i className="fas fa-frog"></i>
+              <ul>
+                <li>Todos</li>
+                <li>Planned</li>
+                <li>Important</li>
+              </ul>
+              {/*create a component here!*/}
             </div>
 
             <div ref={main} className="area main">
               <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
                 <h2>Add a to-do</h2>
                 <hr/>
-                <form onSubmit={handleForm}>
+                <form onSubmit={(e) => e.preventDefault()} autoComplete="off">
                   <label htmlFor="name">Name:</label><br/>
-                  <input type="text" id="name" placeholder={placeholders[Class.randomNumFromArray(placeholders)]} /><br />
+                  <input type="text" value={inputData} onChange={(e) => setInputData(e.target.value)} id="name" placeholder={placeholders[Class.randomNumFromArray(placeholders)]} /><br />
                   <label>Category:</label>
-                  <button>Add</button>
+                  <button onClick={handleNewTodo}>Add</button>
                 </form>
               </Modal>
 
@@ -81,8 +106,10 @@ function TodoApp() {
                 </div>
               </header>
               
-              <div>
-                
+              <div className="todos">
+                <ul>
+                  {createTodos()}
+                </ul>
               </div>
             </div>
               

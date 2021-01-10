@@ -34,7 +34,6 @@ function Clock() {
 
     async function handleAPI(latitude, longitude) {
       const { data } = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${APIkey}`);
-      console.log(data);
       setWeather(data.weather[0].main);
       setLocationCity(data.name);
       setLocationCountry(data.sys.country);

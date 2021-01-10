@@ -54,6 +54,8 @@ hr {
   position: absolute;
   bottom: 15px;
   right: 30px;
+
+  cursor: pointer;
 }
 .modal button:hover {
   transform: scale(1.2);

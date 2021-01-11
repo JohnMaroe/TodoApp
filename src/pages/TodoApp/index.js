@@ -61,7 +61,7 @@ function TodoApp() {
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        <NavLink to="/"><i class="fas fa-angle-left"></i></NavLink>
+        <NavLink to="/"><i className="fas fa-angle-left"></i></NavLink>
 
         <main>
           <div className="bg"></div>
@@ -72,8 +72,7 @@ function TodoApp() {
           
           <section>
             <div className="area nav">
-              <p>asihash</p>
-              <i className="fas fa-frog"></i>
+              <p>Your lobby</p>
               <ul>
                 <li>Todos</li>
                 <li>Planned</li>

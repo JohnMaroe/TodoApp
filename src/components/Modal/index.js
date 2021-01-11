@@ -1,36 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Select from 'react-select';
 
 import './styles.css';
 
 const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' }
+  { value: 'chocolate', label: 'Chocolate', color: 'brown' },
+  { value: 'strawberry', label: 'Strawberry', color: 'red' },
+  { value: 'vanilla', label: 'Vanilla', color: 'wheat' }
 ];
 
+const dot = (color = '#ccc') => ({
+  alignItems: 'center',
+  display: 'flex',
+
+  ':before': {
+    backgroundColor: color,
+    borderRadius: 10,
+    content: '" "',
+    display: 'block',
+    marginRight: 8,
+    height: 10,
+    width: 10,
+  },
+});
+
 const customStyles = {
-  option: (provided, state) => ({
-    ...provided,
-    color: state.isSelected ? 'red' : 'blue',
+  option: (styles, state) => ({
+    ...styles,
+    color: state.isSelected ? '#fff' : '#111d',
     padding: 20,
+    backgroundColor: state.isSelected ? '#111b' : '#eee',
   }),
-  control: (provided, state) => ({
-    ...provided,
+  control: (styles) => ({
+    ...styles,
     width: 350,
     height: 30,
     marginLeft: '30px',
   }),
-  singleValue: (provided, state) => {
-    const opacity = state.isDisabled ? 0.5 : 1;
-    const transition = 'opacity 300ms';
-
-    return { ...provided, opacity, transition };
-  }
+  input: styles => ({ ...styles, ...dot() }),
+  placeholder: styles => ({ ...styles, ...dot() }),
+  singleValue: (styles) => ({ ...styles, ...dot('#111a') }),
 }
 
 function Modal({ open, children, onClose }) {
+  const [selected, setSelected] = useState('');
+
+  function handleChange(selectedOption) {
+    setSelected(selectedOption);
+  }
+
+  useEffect(() => console.log(selected), [selected])
 
   if (!open) return null;
 
@@ -39,7 +59,14 @@ function Modal({ open, children, onClose }) {
       <div className='overlay' onClick={onClose} />
       <div className='modal'>
         {children}
-        <Select options={options} styles={customStyles} />
+        <Select
+          value={selected}
+          onChange={handleChange}
+          label="Category select"
+          options={options} 
+          styles={customStyles} 
+        />
+        {console.log(selected)}
 
         <div className='bookmark'></div>
         <div id="flag"></div>

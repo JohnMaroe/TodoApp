@@ -1,14 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { NavLink } from 'react-router-dom';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
+// Styles
 import { Container } from './styles';
 import './triangles.css';
+import cactus from '../../assets/icons/cactus.svg';
 
 // Components
 import Modal from '../../components/Modal';
 import Adjustments from '../../components/TodoApp/Adjustments';
 import ListItem from '../../components/TodoApp/ListItem';
+import NavItem from '../../components/TodoApp/NavItem';
 
 import Class from '../../functions';
 
@@ -40,16 +44,32 @@ function TodoApp() {
     setInputData('');
   }
 
-  function createTodos() {
-    return todosData.map((data, index) => {
-      return <ListItem key={index} id={index}>{data}</ListItem>;
+  function createTodos(provided) {
+    return todosData.map((data, id) => {
+      return (
+        <Draggable key={id} draggableId={(id).toString()} index={id} {...provided.droppableProps}>
+          {(provided) => (
+            <ListItem provided={provided} id={id}>{data}</ListItem>
+          )}
+        </Draggable>
+      )
     });
+  }
+
+  function handleOnDragEnd(result) {
+    if (!result.destination) return;
+
+    const items = Array.from(todosData);
+    console.log(result);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination, 0, reorderedItem);
+
+    setTodosData(items);
   }
 
   const main = useRef(null);
   useEffect(() => {adjustmentsOpen ? 
       main.current.style.paddingRight = '270px' : main.current.style.paddingRight = '23px'}, [adjustmentsOpen]);
-
 
   const theme = {
     navBg: '#c5ad6f',
@@ -72,13 +92,19 @@ function TodoApp() {
           
           <section>
             <div className="area nav">
-              <p>Your lobby</p>
+              <div className="nav__title">
+                <p>Your lobby</p>
+                <img src={cactus} alt="Cactus"/>
+              </div>
               <ul>
-                <li>Todos</li>
-                <li>Planned</li>
-                <li>Important</li>
+                <NavItem><i className="fas fa-sticky-note"></i> Todos</NavItem>
+                <NavItem>Planned</NavItem>
+                <NavItem>Important</NavItem>
               </ul>
-              {/*create a component here!*/}
+
+              <footer>
+                <p><span>+</span> New page</p>
+              </footer>
             </div>
 
             <div ref={main} className="area main">
@@ -105,15 +131,22 @@ function TodoApp() {
                 </div>
               </header>
               
-              <div className="todos">
-                <ul>
-                  {createTodos()}
-                </ul>
-              </div>
+              <DragDropContext onDragEnd={handleOnDragEnd}>
+                <div className="todos">
+                  <Droppable droppableId="list">
+                    {(provided) => (
+                      <ul {...provided.droppableProps} ref={provided.innerRef}>
+                        {createTodos(provided)}
+                        {provided.placeholder}
+                      </ul>
+                    )}
+                  </Droppable>
+                </div>
+              </DragDropContext>
             </div>
               
             <Adjustments open={adjustmentsOpen}>
-              <div>Fuck Yeah</div>
+              <div>Dreaming bout you</div>
             </Adjustments>
           </section>
         </main>

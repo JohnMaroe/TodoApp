@@ -54,19 +54,103 @@ export const Container = styled.div`
       }
 
       .nav {
+        position: relative;
         z-index: 1;
         width: 20%;
-        padding: 28px;
+        padding: 12px;
         border-radius: 3.5px 0 0 3.5px;
 
         box-shadow: 10px 0 5px rgba(0,0,0,0.4);
         color: rgba(0,0,0, 0.7);
 
-        i {
-          width: 15px;
-          height: 15px;
-          font-size: 28px;
-          color: #d8a05666;
+        .nav__title {
+          display: flex;
+          justify-content: center;
+          align-items: baseline;
+          margin: 24px 0 32px 10px;
+
+          cursor: default;
+
+          p {
+            display: inline;
+            font-size: 32px;
+            margin-right: 12px;
+          }
+          img {
+            width: 32px;
+            height: 32px;
+          }
+        }
+
+        ul {
+          width: 100%;
+          background-color: #95784677;
+          border-radius: 4px;
+
+          li {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            position: relative;
+            list-style: none;
+            
+            width: 100%;
+            height: 56px;
+            padding: 12px;
+            padding-left: 32px;
+
+            font-size: 18px;
+            font-weight: 900;
+
+            cursor: pointer;
+
+            &:hover {
+              background-color: #957846bb;
+
+              &::before {
+                opacity: 1;
+              }
+            }
+            &::before {
+              content: '';
+              position: absolute;
+              opacity: 0;
+
+              left: 8px;
+              background-color: rgba(0,0,0,0.5);
+
+              width: 4px;
+              height: 28px;
+              border-radius: 12px;
+            }
+
+            i {
+              font-size: 18px;
+              margin-right: 12px;
+            }
+          }
+        }
+
+        footer {
+          position: absolute;
+          bottom: 12px;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 91.5%;
+
+          border-top: 1px solid rgba(0,0,0, 0.7);
+
+          p {
+            font-size: 24px;
+
+            span {
+              font-size: 34px;
+              font-weight: 900;
+              margin-right: 6px;
+            }
+          }
         }
       }
 

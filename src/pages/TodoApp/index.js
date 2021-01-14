@@ -7,6 +7,8 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Container } from './styles';
 import './triangles.css';
 import cactus from '../../assets/icons/cactus.svg';
+import mountain from '../../assets/icons/mountain.svg';
+import wave from '../../assets/icons/wave.svg';
 
 // Components
 import Modal from '../../components/Modal';
@@ -15,17 +17,20 @@ import ListItem from '../../components/TodoApp/ListItem';
 import NavItem from '../../components/TodoApp/NavItem';
 
 import Class from '../../functions';
+import DisplayConfig from '../../components/TodoApp/DisplayConfig';
 
 
 function TodoApp() {
   // Data states
   const [modalOpen, setModalOpen] = useState(false);
   const [adjustmentsOpen, setAdjustmentsOpen] = useState(false);
+  const [displayOpen, setDisplayOpen] = useState(false);
   const [date, setDate] = useState();
   const [placeholders,] = useState(['Discord call incoming!', 'Take out the thrash', 'Study \'till midnight', 'Hang out with friends', 'Vet at 12:00PM']);
   const [inputData, setInputData] = useState('');
   const [todosData, setTodosData] = useState(['Eat breakfast at 8PM', 'Walk dog to the park', 'Talk to your friend from Dalas']);
   Class.setLocalStorageFromArray(todosData);
+  const [navIcon, setNavIcon] = useState(cactus);
 
   // Functions and handlers
   function handleDay() {
@@ -35,6 +40,24 @@ function TodoApp() {
     setDate(now);
   }
   useEffect(handleDay, []);
+
+  function allStorage() {
+    let values = [],
+        keys = Object.keys(localStorage),
+        i = keys.length;
+
+    while ( i-- ) {
+      values.push( localStorage.getItem(keys[i]) );
+    }
+    return values;
+  }
+
+  function handleNavIcon() {
+    const imgs = [cactus, mountain, wave];
+    navIcon === cactus ? setNavIcon(mountain) :
+    navIcon === mountain ? setNavIcon(wave) :
+    navIcon === wave ? setNavIcon(cactus) : setNavIcon();
+  }
 
   // Creating todos
   function handleNewTodo() {
@@ -60,9 +83,8 @@ function TodoApp() {
     if (!result.destination) return;
 
     const items = Array.from(todosData);
-    console.log(result);
     const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination, 0, reorderedItem);
+    items.splice(result.destination.index, 0, reorderedItem);
 
     setTodosData(items);
   }
@@ -94,7 +116,7 @@ function TodoApp() {
             <div className="area nav">
               <div className="nav__title">
                 <p>Your lobby</p>
-                <img src={cactus} alt="Cactus"/>
+                <img onClick={handleNavIcon} src={navIcon} alt={navIcon.toString()} />
               </div>
               <ul>
                 <NavItem><i className="fas fa-sticky-note"></i> Todos</NavItem>
@@ -125,9 +147,10 @@ function TodoApp() {
                   <p>{date}</p>
                 </div>
 
-                <div>
-                  <button onClick={() => setModalOpen(true)}><i className="fas fa-plus"></i></button>
+                <div className="buttonsDiv">
+                  <button onClick={() => setModalOpen(true)} className="buttonAdd"><i className="fas fa-plus"></i>Add</button>
                   <button onClick={() => {setAdjustmentsOpen(!adjustmentsOpen);}}><i className="far fa-clone"></i></button>
+                  <button onClick={() => {setDisplayOpen(!displayOpen);}}><i className="fas fa-ellipsis-h"></i></button>
                 </div>
               </header>
               
@@ -144,6 +167,8 @@ function TodoApp() {
                 </div>
               </DragDropContext>
             </div>
+
+            <DisplayConfig open={displayOpen} />
               
             <Adjustments open={adjustmentsOpen}>
               <div>Dreaming bout you</div>

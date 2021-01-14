@@ -50,8 +50,6 @@ function Modal({ open, children, onClose }) {
     setSelected(selectedOption);
   }
 
-  useEffect(() => console.log(selected), [selected])
-
   if (!open) return null;
 
   return ReactDOM.createPortal(

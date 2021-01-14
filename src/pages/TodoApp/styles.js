@@ -141,9 +141,10 @@ export const Container = styled.div`
           width: 91.5%;
 
           border-top: 1px solid rgba(0,0,0, 0.7);
-
+          
           p {
             font-size: 24px;
+            cursor: pointer;
 
             span {
               font-size: 34px;
@@ -173,6 +174,22 @@ export const Container = styled.div`
           align-items: center;
 
           margin-bottom: 24px;
+
+          .buttonsDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            .buttonAdd {
+              display: flex;
+              width: 76px;
+              margin-right: 45px;
+
+              i {
+                margin-right: 8px;
+              }
+            }
+          }
         }
 
         h1 {
@@ -181,7 +198,7 @@ export const Container = styled.div`
 
         button {
           position: relative;
-          margin-right: 15px;
+          margin-right: 12px;
           font-size: 20px;
           width: 36px;
           cursor: pointer;

@@ -4,6 +4,8 @@
 I love todo apps, they are so useful, quick to add a task and helps tons with productivity. (and memory)
 But I always felt incomplete using other's todo apps, which is why I'm creating this version and adding features that make me feel more productive and satisfied!
 
+- As always, you can check it out over here 👉 https://todo-app-pi-ten.vercel.app/
+
 
 ### Technologies being used as of now
 React ⚛️ <br />

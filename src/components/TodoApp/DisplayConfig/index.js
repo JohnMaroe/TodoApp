@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -27,17 +27,26 @@ const Container = styled.div`
   }
 `;
 
-function DisplayConfig({ open }) {
-  if (!open) return null;
+function DisplayConfig({ open, adjustOpen }) {
+  const displayRef = useRef(null);
+  
+  useEffect(() => {
+    displayRef.current.style.position = 'absolute';
+    adjustOpen ? displayRef.current.style.right = '250px' : displayRef.current.style.right = '0';
+  }, [adjustOpen]);
 
   return (
-    <Container>
-      <p>Theme</p>
-      <div className="themes">
-        <div className="div first"></div>
-        <div className="div second"></div>
-      </div>
-    </Container>
+    <div ref={displayRef}>
+      { open &&
+        <Container>
+          <p>Theme</p>
+          <div className="themes">
+            <div className="div first"></div>
+            <div className="div second"></div>
+          </div>
+        </Container> 
+      }
+    </div>
   );
 }
 

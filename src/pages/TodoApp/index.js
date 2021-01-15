@@ -168,7 +168,7 @@ function TodoApp() {
               </DragDropContext>
             </div>
 
-            <DisplayConfig open={displayOpen} />
+            <DisplayConfig open={displayOpen} adjustOpen={adjustmentsOpen} />
               
             <Adjustments open={adjustmentsOpen}>
               <div>Dreaming bout you</div>

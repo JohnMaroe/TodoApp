@@ -13,22 +13,29 @@ const Container = styled.div`
   border-radius: 5px;
   padding: 20px;
 
-  .div {
-    width: 25px;
-    height: 25px;
-    margin: 5px;
+  p {
+    margin-bottom: 8px;
   }
 
-  .first {
-    background-color: red;
+  .themes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(5, 1fr);
   }
-  .second {
-    background: blue;
+
+  .div {
+    width: 45px;
+    height: 45px;
+    margin: 7px;
+
+    cursor: pointer;
   }
 `;
 
 function DisplayConfig({ open, adjustOpen }) {
   const displayRef = useRef(null);
+
+  const colors = ['red', 'rgb(0,0,256)', 'wheat', '#BADA55', 'rgba(50,89,103)', 'purple', 'lightpink', 'yellow'];
   
   useEffect(() => {
     displayRef.current.style.position = 'absolute';
@@ -41,8 +48,9 @@ function DisplayConfig({ open, adjustOpen }) {
         <Container>
           <p>Theme</p>
           <div className="themes">
-            <div className="div first"></div>
-            <div className="div second"></div>
+            {colors.map((color, index) => {
+              return <div key={index} className="div" style={{ backgroundColor: color }}></div>
+            })}
           </div>
         </Container> 
       }

@@ -79,6 +79,7 @@ export const Container = styled.div`
           img {
             width: 32px;
             height: 32px;
+            user-select: none;
           }
         }
 
@@ -128,6 +129,25 @@ export const Container = styled.div`
               font-size: 18px;
               margin-right: 12px;
             }
+          }
+        }
+
+        form {
+          input {
+            display: flex;
+            align-items: center;
+            position: relative;
+            background-color: #957846bb;
+            
+            width: 100%;
+            height: 56px;
+            padding: 12px;
+            padding-left: 32px;
+            border-radius: 4px;
+
+            font-size: 16px;
+            font-weight: 900;
+            font-family: 'Cabin', sans-serif;
           }
         }
 

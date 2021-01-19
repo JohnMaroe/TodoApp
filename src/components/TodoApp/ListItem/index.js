@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.li`
@@ -9,7 +9,6 @@ const Container = styled.li`
 
   padding: 18px 34px;
   margin-bottom: 16px;
-  transition: all 100ms ease;
 
   position: relative;
 
@@ -67,12 +66,19 @@ const Container = styled.li`
 `;
 
 function ListItem({ children, id, provided }) {
+  const [starIcon, setStarIcon] = useState("far fa-star");
+
+  function handleStar() {
+    starIcon === "far fa-star" ? setStarIcon("fas fa-star") :
+    starIcon === "fas fa-star" ? setStarIcon("far fa-star") : setStarIcon();
+  }
+
   return (
     <Container ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
       <input type="checkbox" name={id} id={id} />
       <label htmlFor={id}><div></div></label>
       <p>{children}</p>
-      <i className="far fa-star"></i>
+      <i onClick={handleStar} className={starIcon}></i>
     </Container>
   );
 }

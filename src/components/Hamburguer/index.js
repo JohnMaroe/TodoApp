@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const hamburguerAnimation = keyframes`
@@ -25,12 +25,29 @@ const Container = styled.span`
       animation-iteration-count: infinite;
     }
   }
+
+  .dialog {
+    width: 385px;
+    height: 250px;
+    position: absolute;
+    right: 30px;
+    top: 60px;
+
+    background-color: black;
+    padding: 12px;
+    border-radius: 8px;
+  }
 `;
 
 function Hamburguer(props) {
+  const [hamburguerDiv, setHamburguerDiv] = useState(false);
+
   return (
     <Container {...props}>
-      <div className="hamburguer"><i className="fas fa-bars"></i></div>
+      <div className="hamburguer" onClick={() => setHamburguerDiv(!hamburguerDiv)}>
+        <i className="fas fa-bars"></i>
+      </div>
+      {hamburguerDiv && <div className="dialog">Made with love by John</div>}
     </Container>
   );
 }

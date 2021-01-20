@@ -94,6 +94,7 @@ export const Container = styled.div`
             justify-content: left;
             position: relative;
             list-style: none;
+            user-select: none;
             
             width: 100%;
             height: 56px;

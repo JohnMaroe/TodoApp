@@ -26,6 +26,7 @@ export const Container = styled.div`
   height: 100%;
   width: 100%;
   opacity: 1;
+  overflow: hidden;
   cursor: default;
 
   main {

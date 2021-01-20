@@ -122,7 +122,7 @@ function TodoApp() {
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        <NavLink to="/"><i className="fas fa-angle-left"></i></NavLink>
+        <NavLink to="/"><i title="Go back" className="fas fa-angle-left"></i></NavLink>
 
         <main>
           <div className="bg"></div>
@@ -172,9 +172,9 @@ function TodoApp() {
                 </div>
 
                 <div className="buttonsDiv">
-                  <button onClick={() => setModalOpen(true)} className="buttonAdd"><i className="fas fa-plus"></i>Add</button>
-                  <button onClick={() => {setAdjustmentsOpen(!adjustmentsOpen);}}><i className="far fa-clone"></i></button>
-                  <button onClick={() => {setDisplayOpen(!displayOpen);}}><i className="fas fa-ellipsis-h"></i></button>
+                  <button title="Add new todo" onClick={() => setModalOpen(true)} className="buttonAdd"><i className="fas fa-plus"></i>Add</button>
+                  <button title="See more" onClick={() => {setAdjustmentsOpen(!adjustmentsOpen);}}><i className="far fa-clone"></i></button>
+                  <button title="Change style" onClick={() => {setDisplayOpen(!displayOpen);}}><i className="fas fa-ellipsis-h"></i></button>
                 </div>
               </header>
               
@@ -195,7 +195,13 @@ function TodoApp() {
             <DisplayConfig open={displayOpen} adjustOpen={adjustmentsOpen} />
               
             <Adjustments open={adjustmentsOpen}>
-              <div>Dreaming bout you</div>
+              <div>
+                <h1>Info</h1>
+                <p>Created at: 12:00AM 12/02/1998</p>
+                <p>Last update: 12:00PM 19/01/2021</p>
+                <p>Owner: John</p>
+                <p>Favorites: [array of favorites]</p>
+              </div>
             </Adjustments>
           </section>
         </main>

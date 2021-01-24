@@ -64,7 +64,6 @@ function Modal({ open, children, onClose }) {
           options={options} 
           styles={customStyles} 
         />
-        {console.log(selected)}
 
         <div className='bookmark'></div>
         <div id="flag"></div>

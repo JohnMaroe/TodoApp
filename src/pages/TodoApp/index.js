@@ -29,14 +29,13 @@ function TodoApp() {
   const [date, setDate] = useState();
   const [placeholders,] = useState(['Discord call incoming!', 'Take out the thrash', 'Study \'till midnight', 'Hang out with friends', 'Vet at 12:00PM']);
 
-  const [inputData, setInputData] = useState('');
-  const [todosData, setTodosData] = useState(['Eat breakfast at 8PM', 'Walk dog to the park', 'Talk to your friend from Dalas']);
+  const [modalInputData, setModalInputData] = useState('');
+  const [todosData, setTodosData] = useState([]);
 
   const [navIcon, setNavIcon] = useState(cactus);
   const [navItems, setNavItems] = useState(['Todos', 'Planned', 'Important']);
   const [showNavInput, setShowNavInput] = useState(false);
   const [navInputData, setNavInputData] = useState('');
-  Class.setLocalStorageFromArray(todosData);
 
   // Functions and handlers
   function handleDay() {
@@ -47,37 +46,54 @@ function TodoApp() {
   }
   useEffect(handleDay, []);
 
-  function allStorage() {
-    let values = [],
-        keys = Object.keys(localStorage),
-        i = keys.length;
-
-    while ( i-- ) {
-      values.push( localStorage.getItem(keys[i]) );
-    }
-    return values;
-  }
-
-  function handleNavIcon() {
+  async function handleNavIcon() {
     navIcon === cactus ? setNavIcon(mountain) :
     navIcon === mountain ? setNavIcon(wave) :
     navIcon === wave ? setNavIcon(cactus) : setNavIcon();
   }
 
   // Creating todos
-  function handleNewTodo() {
-    if (inputData === '') return;
+  async function handleNewTodo() {
+    if (modalInputData === '') return;
 
-    setTodosData([...todosData, inputData]);
-    setInputData('');
+    try {
+
+      const body = { modalInputData };
+      setModalInputData('')
+
+      const todo = await fetch("http://localhost:4000/db" || process.env.DATABASE_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        mode: 'cors',
+        body: JSON.stringify(body)
+      })
+    } catch (err) {
+      console.error(err);
+    }
   }
 
+  async function getTodos() {
+    try {
+      
+      const response = await fetch("http://localhost:4000/db" || process.env.DATABASE_URL);
+      const data = await response.json();
+
+      setTodosData(data.result.results);
+
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+  useEffect(() => {
+    getTodos();
+  }, [])
+
   function renderTodos(provided) {
-    return todosData.map((data, id) => {
+    return todosData.map( (todo) => {
       return (
-        <Draggable key={id} draggableId={(id).toString()} index={id} {...provided.droppableProps}>
+        <Draggable key={todo.todo_id} draggableId={(todo.todo_id).toString()} index={todo.todo_id} {...provided.droppableProps}>
           {(provided) => (
-            <ListItem provided={provided} id={id}>{data}</ListItem>
+            <ListItem provided={provided} changeTodoList={[todosData, setTodosData]} databaseId={todo.todo_id} id={todo.todo_content.split(' ').join('')}>{todo.todo_content}</ListItem>
           )}
         </Draggable>
       )
@@ -159,7 +175,7 @@ function TodoApp() {
                 <hr/>
                 <form onSubmit={(e) => e.preventDefault()} autoComplete="off">
                   <label htmlFor="name">Name:</label><br/>
-                  <input type="text" value={inputData} onChange={(e) => setInputData(e.target.value)} id="name" placeholder={placeholders[Class.randomNumFromArray(placeholders)]} /><br />
+                  <input type="text" value={modalInputData} onChange={(e) => setModalInputData(e.target.value)} id="name" placeholder={placeholders[Class.randomNumFromArray(placeholders)]} /><br />
                   <label>Category:</label>
                   <button onClick={handleNewTodo}>Add</button>
                 </form>

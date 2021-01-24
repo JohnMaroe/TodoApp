@@ -23,12 +23,30 @@ const Container = styled.li`
   }
 
   i {
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .fa-star {
     position: absolute;
     right: 18px;
     top: 18px;
+  }
 
-    font-size: 18px;
-    cursor: pointer;
+  .fa-trash-alt {
+    font-size: 16px;
+    position: absolute;
+    right: 52px;
+    top: 20px;
+  }
+
+  .fa-check {
+    font-size: 16px;
+    position: absolute;
+    right: 52px;
+    top: 20px;
+    color: rgba(220, 50, 72);
+
   }
 
   input[type="checkbox"] {
@@ -65,19 +83,43 @@ const Container = styled.li`
   }
 `;
 
-function ListItem({ children, id, provided }) {
+function ListItem({ children, id, provided, changeTodoList, databaseId }) {
   const [starIcon, setStarIcon] = useState("far fa-star");
+  const [trashIcon, setTrashIcon] = useState("far fa-trash-alt");
+  const [checkbox, setCheckbox] = useState(false);
 
   function handleStar() {
     starIcon === "far fa-star" ? setStarIcon("fas fa-star") :
     starIcon === "fas fa-star" ? setStarIcon("far fa-star") : setStarIcon();
   }
 
+  function handleTrash() {
+    trashIcon === "far fa-trash-alt" ? setTrashIcon("fas fa-check") :
+    trashIcon === "fas fa-check" ? handleDelete(databaseId) : setTrashIcon();
+  }
+
+  async function handleDelete(id) {
+    setTrashIcon("far fa-trash-alt");
+
+    try {
+      
+      const response = await fetch(`http://localhost:4000/db/${id}` || process.env.DATABASE_URL, {
+        method: "DELETE"
+      });
+
+      changeTodoList[1](changeTodoList[0].filter(todo => todo.todo_id !== id));
+
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   return (
     <Container ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-      <input type="checkbox" name={id} id={id} />
+      <input type="checkbox" value={checkbox} onClick={() => setCheckbox(!checkbox)} id={id} />
       <label htmlFor={id}><div></div></label>
       <p>{children}</p>
+      <i onClick={handleTrash} className={trashIcon}></i>
       <i onClick={handleStar} className={starIcon}></i>
     </Container>
   );
